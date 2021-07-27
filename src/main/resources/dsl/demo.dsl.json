@@ -1,0 +1,35 @@
+{
+  "tasks": [
+    {
+      "url": "https://www.baidu.com/sugrec",
+      "alias": "d1",
+      "taskType": "http",
+      "method": "get",
+      "retry": "1",
+      "timeout": 3000,
+      "inputs": {
+        "access_token": "#access_token"
+      },
+      "inputsExtra": {
+        "access_token": "java.lang.String"
+      }
+    },
+    {
+      "alias": "d2",
+      "scriptId": "123",
+      "taskType": "groovy",
+      "inputs": {
+        "string_value": "$d1.queryid"
+      },
+      "inputsExtra": {
+        "string_value": "java.lang.String"
+      }
+    }
+  ],
+  "name": "test",
+  "description": "组装上述接口获取订单状态和支付状态",
+  "outputs": {
+    "originQueryId": "$d1.queryid",
+    "sortedQueryId": "$d2.queryid"
+  }
+}
