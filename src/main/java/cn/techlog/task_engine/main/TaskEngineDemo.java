@@ -23,10 +23,12 @@ public class TaskEngineDemo {
 
     public static void main(String[] args) {
         Map<String, String> request = new HashMap<>();
-        request.put("token", "5e24e61a2651ff");
+        request.put("token", "5e24e61a2651ff"); // just for example
+
         Map<String, Object> params = new HashMap<>();
         params.put("request", request);
         params.put("taskResults", new HashMap<>());
+
         String dslString = FileUtil.getFileString("dsl/demo.dsl.json");
         JSONObject jsonObject = JSON.parseObject(dslString);
         JSONArray tasks = jsonObject.getJSONArray("tasks");
@@ -37,6 +39,7 @@ public class TaskEngineDemo {
             Map<String, JSONObject> taskResults = (Map<String, JSONObject>) params.get("taskResults");
             taskResults.put(task.getString("alias"), taskResult);
         }
+
         Map<String, Object> outputs = TaskUtils.getParameters(jsonObject.getJSONObject("outputs"), params);
         System.out.println(outputs);
     }

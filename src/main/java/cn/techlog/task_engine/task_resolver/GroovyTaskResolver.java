@@ -33,7 +33,7 @@ public class GroovyTaskResolver implements TaskResolver {
 
     public GroovyTask getGroovyTask(String scriptId) {
         try {
-            // TODO: get groovy script from db
+            // TODO: get groovy script from db, and use a cache for it
             String script = FileUtil.getFileString("groovy/DemoGroovyTask.groovy");
             GroovyClassLoader loader = AccessController.doPrivileged((PrivilegedAction<GroovyClassLoader>) () ->
                     new GroovyClassLoader(GroovyTaskResolver.class.getClassLoader(), DEFAULT_CONFIG));
