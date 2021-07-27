@@ -12,7 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DslDemoTest {
+public class TaskEngineDemo {
     private final static Map<String, TaskResolver> taskResolverMap;
 
     static {
