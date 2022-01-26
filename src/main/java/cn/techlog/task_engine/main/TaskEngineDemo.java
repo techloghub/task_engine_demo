@@ -23,7 +23,6 @@ public class TaskEngineDemo {
 
     public static void main(String[] args) throws Exception {
         Map<String, String> request = new HashMap<>();
-        request.put("token", "5e24e32a2651ff"); // just for example
 
         Map<String, Object> params = new HashMap<>();
         params.put("request", request);
