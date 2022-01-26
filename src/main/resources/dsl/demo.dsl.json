@@ -16,7 +16,7 @@
     },
     {
       "alias": "d2",
-      "scriptId": "123",
+      "scriptId": "DemoGroovyTask",
       "taskType": "groovy",
       "inputs": {
         "string_value": "$d1.queryid"

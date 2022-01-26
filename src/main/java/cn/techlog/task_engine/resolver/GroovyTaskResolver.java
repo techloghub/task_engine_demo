@@ -1,6 +1,6 @@
-package cn.techlog.task_engine.task_resolver;
+package cn.techlog.task_engine.resolver;
 
-import cn.techlog.task_engine.groovy_task.GroovyTask;
+import cn.techlog.task_engine.script.GroovyTask;
 import cn.techlog.task_engine.utils.FileUtil;
 import cn.techlog.task_engine.utils.TaskUtils;
 import com.alibaba.fastjson.JSONObject;
@@ -20,7 +20,7 @@ public class GroovyTaskResolver implements TaskResolver {
     private final static Cache<String, Class<GroovyTask>> cache = CacheBuilder.newBuilder().maximumSize(10).build();
 
     @Override
-    public JSONObject resolve(JSONObject task, Map<String, Object> params) {
+    public JSONObject resolve(JSONObject task, Map<String, Object> params) throws Exception {
         Map<String, String> request = (Map<String, String>) params.get("request");
         Map<String, Object> parameters = TaskUtils.getParameters(task.getJSONObject("inputs"), params);
 
@@ -28,10 +28,7 @@ public class GroovyTaskResolver implements TaskResolver {
         groovyArgs.put("request", request);
         groovyArgs.put("parameters", parameters);
         GroovyTask groovyTask = getGroovyTask(task.getString("scriptId"));
-        if (groovyTask == null) {
-            return null;
-        }
-        return groovyTask.groovyTask(groovyArgs);
+        return groovyTask == null? null: groovyTask.execute(groovyArgs);
     }
 
     public GroovyTask getGroovyTask(String scriptId) {
@@ -40,14 +37,14 @@ public class GroovyTaskResolver implements TaskResolver {
             return groovyTaskClazz.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     public Class<GroovyTask> getGroovyTaskClazz(String scriptId) {
         try {
             // TODO: get groovy script from db or cache
-            String script = FileUtil.getFileString("groovy/DemoGroovyTask.groovy");
+            String script = FileUtil.getFileString("groovy/" + scriptId + ".groovy");
             GroovyClassLoader loader = AccessController.doPrivileged((PrivilegedAction<GroovyClassLoader>) () ->
                     new GroovyClassLoader(GroovyTaskResolver.class.getClassLoader(), DEFAULT_CONFIG));
             GroovyCodeSource codeSource = new GroovyCodeSource(script, "GroovyTask", "/groovy");

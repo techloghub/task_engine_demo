@@ -8,6 +8,10 @@ public class FileUtil {
         StringBuilder fileStringBuilder = new StringBuilder();
         try {
             URL url = FileUtil.class.getClassLoader().getResource(fileName);
+            if (url == null) {
+                System.err.println("file dose not exist: " + fileName);
+                return null;
+            }
             File file = new File(url.getFile());
             Reader reader = new InputStreamReader(new FileInputStream(file));
             char[] buffer = new char[1024 * 1024];

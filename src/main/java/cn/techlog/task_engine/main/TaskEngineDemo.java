@@ -1,8 +1,8 @@
 package cn.techlog.task_engine.main;
 
-import cn.techlog.task_engine.task_resolver.GroovyTaskResolver;
-import cn.techlog.task_engine.task_resolver.HttpTaskResolver;
-import cn.techlog.task_engine.task_resolver.TaskResolver;
+import cn.techlog.task_engine.resolver.GroovyTaskResolver;
+import cn.techlog.task_engine.resolver.HttpTaskResolver;
+import cn.techlog.task_engine.resolver.TaskResolver;
 import cn.techlog.task_engine.utils.FileUtil;
 import cn.techlog.task_engine.utils.TaskUtils;
 import com.alibaba.fastjson.JSON;
@@ -21,9 +21,9 @@ public class TaskEngineDemo {
         taskResolverMap.put("groovy", new GroovyTaskResolver());
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Map<String, String> request = new HashMap<>();
-        request.put("token", "5e24e61a2651ff"); // just for example
+        request.put("token", "5e24e32a2651ff"); // just for example
 
         Map<String, Object> params = new HashMap<>();
         params.put("request", request);
